@@ -19,8 +19,8 @@ public class Order {
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Column(name="MEMBER_ID")
-    private Long memberId; //객체지향적인 설계가 아니다!! 객체로 변화시켜야함
+//    @Column(name="MEMBER_ID")
+//    private Long memberId; //객체지향적인 설계가 아니다!! 객체로 변화시켜야함
     private LocalDateTime orderDate;
 
     @ManyToOne
