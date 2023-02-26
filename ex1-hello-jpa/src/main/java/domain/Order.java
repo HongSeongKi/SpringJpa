@@ -23,8 +23,12 @@ public class Order {
 //    private Long memberId; //객체지향적인 설계가 아니다!! 객체로 변화시켜야함
     private LocalDateTime orderDate;
 
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
+
     @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
+    @JoinColumn(name = "MEMBER_ID") // 다대일에서는 joincolumn을 넣어야한다 안넣으면 조인테이블이 생성됨
     private Member2 member;
 
     @OneToMany(mappedBy = "order")

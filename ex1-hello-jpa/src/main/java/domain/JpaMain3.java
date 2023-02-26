@@ -14,8 +14,28 @@ public class JpaMain3 {
         tx.begin(); // jpa는 트랜잭션 안에서 실행되어야한다., JPA의 모든 데이터 변경은 트랜잭션 안에서 실행
 
         try{
-            Order order = new Order();
-            order.addOrderItem(new OrderItem());
+//            Order order = new Order();
+//            order.addOrderItem(new OrderItem());
+            //상속관계
+//            Movie movie = new Movie();
+//            movie.setDirector("aaaa");
+//            movie.setActor("bbbb");
+//            movie.setName("바람과함께사라지다.");
+//            movie.setPrice(10000);  //movie랑 아이템 모두 들어간다.
+//
+//            em.persist(movie);
+//
+//            em.flush();
+//            em.clear();
+//
+//            Movie findMovie = em.find(Movie.class,movie.getId());
+//            System.out.println("findMovie = "+ findMovie);
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("test");
+
+            em.persist(book);
+
             tx.commit();
         }catch(Exception e){
             tx.rollback();
