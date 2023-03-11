@@ -23,15 +23,15 @@ public class Order {
 //    private Long memberId; //객체지향적인 설계가 아니다!! 객체로 변화시켜야함
     private LocalDateTime orderDate;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "DELIVERY_ID")
     private Delivery delivery;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_ID") // 다대일에서는 joincolumn을 넣어야한다 안넣으면 조인테이블이 생성됨
     private Member2 member;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
