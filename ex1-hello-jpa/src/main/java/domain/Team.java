@@ -1,6 +1,7 @@
 package domain;
 
 
+import jpql.JpqlMember;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Team extends BaseEntity{
     private Long id;
 
     private String name;
+
 
     //양방향
     //@OneToMany(mappedBy = "team") //member3의 변수명, 연관관계의 주인을 설정할 때 사용, mapppedBy를 쓰면 양방향에서 연관관계의 주인이 될 수 없다., 외래키가 있는곳을 주인으로 정한다.

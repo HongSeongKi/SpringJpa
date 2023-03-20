@@ -36,6 +36,7 @@ public class Member4{
     )
     @Column(name = "FOOD_NAME") //String에 해당하는 column 이름 지정가능
     private Set<String> favoriteFoods = new HashSet<>();
+
     @ElementCollection
     @CollectionTable(name = "ADDRESS", joinColumns =
             @JoinColumn(name = "MEMBER_ID")
