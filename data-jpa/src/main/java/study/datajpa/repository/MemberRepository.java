@@ -14,7 +14,7 @@ import javax.persistence.QueryHint;
 import java.util.List;
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age); //쿼리메소드
 
@@ -71,6 +71,12 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true") )
     Member findReadOnlyByUsername(String username);
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Lock(LockModeType.PESSIMISTIC_WRITE) //락 사용하기  https://isntyet.github.io/jpa/JPA-%EB%B9%84%EA%B4%80%EC%A0%81-%EC%9E%A0%EA%B8%88(Pessimistic-Lock)/
     List<Member> findLockByUsername(String username);
+
+    //List<UsernameOnlyDto>로도 가능
+    List<UsernameOnly> findProjectionsByUsername(@Param("username") String username);
+
+    <T> List<T> findProjectionsGenericByUsername(@Param("usernname") String username, Class<T> type);
+
 }

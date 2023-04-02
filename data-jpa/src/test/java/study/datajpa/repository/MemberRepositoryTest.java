@@ -4,10 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -296,5 +293,72 @@ public class MemberRepositoryTest {
         //when
         List<Member> result = memberRepository.findLockByUsername("member1");
     }
+
+    @Test
+    public void callCustom(){
+        memberRepository.findMemberCustom();
+    }
+
+    @Test
+    public void queryByExample() {
+        //given
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member m1 = new Member("m1", 0, teamA);
+        Member m2 = new Member("m2", 0, teamA);
+        em.persist(m1);
+        em.persist(m2);
+
+        em.flush();
+        em.clear();
+
+        //when
+        //Probe
+        Member member = new Member("m1");
+        Team team = new Team("teamA");
+        member.setTeam(team);
+        //team이랑 member랑 이너조인하며 두개의 name을 사용한다.
+
+        ExampleMatcher matcher = ExampleMatcher.matching()
+                .withIgnorePaths("age"); //age정보를 빼기 위해서 사용,username으로만 매칭
+
+        Example<Member> example = Example.of(member ,matcher);
+
+        List<Member> result = memberRepository.findAll(example);
+
+        assertThat(result.get(0).getUsername()).isEqualTo("m1");
+    }
+
+    @Test
+    public void projections(){
+        Team teamA = new Team("teamA");
+        em.persist(teamA);
+
+        Member m1 = new Member("m1", 0, teamA);
+        Member m2 = new Member("m2", 0, teamA);
+        em.persist(m1);
+        em.persist(m2);
+
+        em.flush();
+        em.clear();
+
+        //when
+        //List<UsernameOnly> result = memberRepository.findProjectionsByUsername("m1");
+
+        List<UsernameOnlyDto> all = memberRepository.findProjectionsGenericByUsername("m1",UsernameOnlyDto.class);
+
+        for(UsernameOnlyDto usernameOnly : all){
+            System.out.println("usernameOnly = "+usernameOnly);
+        }
+
+        //team 컬럼들 다들고온다.
+        List<NestedClosedProjections> all2 = memberRepository.findProjectionsGenericByUsername("m1",NestedClosedProjections.class);
+        for(NestedClosedProjections prj : all2){
+            System.out.println("usernameOnly = "+prj);
+        }
+
+    }
+
 
 }

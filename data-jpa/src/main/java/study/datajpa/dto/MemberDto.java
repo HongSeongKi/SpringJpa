@@ -1,5 +1,7 @@
 package study.datajpa.dto;
 
+import study.datajpa.entity.Member;
+
 public class MemberDto {
     private Long id;
     private String username;
@@ -9,5 +11,10 @@ public class MemberDto {
         this.id = id;
         this.username = username;
         this.teamname = teamname;
+    }
+
+    public MemberDto(Member member){
+        this.id = member.getId();
+        this.username = member.getUsername();
     }
 }
