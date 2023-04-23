@@ -1,14 +1,11 @@
 package study.datajpa.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 import study.datajpa.dto.MemberDto;
 import study.datajpa.entity.Member;
-
-import javax.persistence.Access;
 import javax.persistence.LockModeType;
 import javax.persistence.QueryHint;
 import java.util.List;
