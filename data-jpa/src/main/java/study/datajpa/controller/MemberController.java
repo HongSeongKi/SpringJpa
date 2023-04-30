@@ -9,16 +9,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import study.datajpa.dto.MemberDto;
+import study.datajpa.dto.MemberSearchCondition;
+import study.datajpa.dto.MemberTeamDto;
 import study.datajpa.entity.Member;
+import study.datajpa.repository.MemberQueuryDslRepository;
 import study.datajpa.repository.MemberRepository;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
 
     private final MemberRepository memberRepository;
+    private final MemberQueuryDslRepository memberQueuryDslRepository;
 
     @GetMapping("/members/{id}")
     public String findMember(@PathVariable("id") Long id){
@@ -36,6 +41,21 @@ public class MemberController {
         Page<Member> all = memberRepository.findAll(pageable);
         Page<MemberDto> map = all.map(MemberDto::new);
         return map;
+    }
+
+    @GetMapping("/v1/members")
+    public List<MemberTeamDto> searchMemberV1(MemberSearchCondition condition){
+        return memberQueuryDslRepository.search(condition);
+    }
+
+    @GetMapping("/v2/members")
+    public Page<MemberTeamDto> searchMemberV2(MemberSearchCondition condition,Pageable pageable){
+        return memberRepository.searchPageSimple(condition,pageable);
+    }
+
+    @GetMapping("/v3/members")
+    public Page<MemberTeamDto> searchMemberV3(MemberSearchCondition condition,Pageable pageable){
+        return memberRepository.searchPageComplex(condition,pageable);
     }
 
     @GetMapping("/api/hello")

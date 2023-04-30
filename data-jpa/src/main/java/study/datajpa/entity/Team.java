@@ -2,6 +2,7 @@ package study.datajpa.entity;
 
 import lombok.*;
 
+import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

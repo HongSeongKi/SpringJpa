@@ -17,6 +17,7 @@ public class DataJpaApplication {
 		SpringApplication.run(DataJpaApplication.class, args);
 	}
 
+
 	@Bean
 	public AuditorAware<String> auditorProvider(){
 		return new AuditorAware<String>() {

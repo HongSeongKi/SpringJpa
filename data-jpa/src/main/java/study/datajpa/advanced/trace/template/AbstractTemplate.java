@@ -5,7 +5,7 @@ import study.datajpa.advanced.trace.LogTrace;
 import study.datajpa.advanced.trace.TraceStatus;
 
 @Slf4j
-public abstract class AbstractTemplate<T> {
+public abstract class AbstractTemplate<T> { //템플릿메서드 패턴 -> 부모 클래스의 메소드를 넣어두고 자식은 상속받아서 해결 , but 부모코드에서 문제가 생기면 자식에게도 영향을 받는다.
 
     private final LogTrace trace;
 
@@ -29,7 +29,7 @@ public abstract class AbstractTemplate<T> {
         }
     }
 
-    public abstract T call();
+    public abstract T call(); //변하는 이부분은 자식 클래스에서 구현
 
 
 }

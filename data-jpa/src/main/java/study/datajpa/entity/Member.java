@@ -2,6 +2,7 @@ package study.datajpa.entity;
 
 import lombok.*;
 
+import javax.annotation.processing.Generated;
 import javax.persistence.*;
 
 @Entity
@@ -35,7 +36,7 @@ public class Member extends JpaBaseEntity{
     }
 
     public Member(String username) {
-        this.username = username;
+        this(username,0);
     }
 
     public Member(String username, int age, Team team) {
